@@ -586,7 +586,8 @@ h2,p{margin:0}
     }
   }
 
-  function analyze(following, followers) {
+  function analyze(following, followers, force) {
+    state.maps = { following, followers };
     const uid = state.me.uid;
     const snapKey = P + 'snap:' + uid;
     const logKey = P + 'log:' + uid;
@@ -606,12 +607,28 @@ h2,p{margin:0}
       prevF.forEach((u, pk) => { if (!followers.has(pk)) { fresh.push({ pk, u, date: now }); freshPks.add(pk); } });
       followers.forEach((_, pk) => { if (!prevF.has(pk)) newFollowers++; });
     }
+    // Pengaman agar tidak menuduh unfollow secara keliru:
+    // 1) data pengikut dari Instagram jauh lebih sedikit dari angka di profil -> data tidak lengkap
+    // 2) terlalu banyak akun "hilang" sekaligus -> hampir pasti data tidak lengkap
+    const reported = state.me.followers;
+    const complete = reported == null || followers.size >= reported - Math.max(5, Math.ceil(reported * 0.03));
+    let skip = null;
+    if (!complete) skip = 'incomplete';
+    else if (!force && prev && Array.isArray(prev.f) && fresh.length > Math.max(20, prev.f.length * 0.3)) skip = 'suspicious';
+    const skipCount = fresh.length;
+
     // Log kumulatif; akun yang kembali mengikuti dikeluarkan dari log
     let log = LS.get(logKey, []).filter((x) => x && x.pk && !followers.has(x.pk));
-    const inLog = new Set(log.map((x) => x.pk));
-    log = fresh.filter((x) => !inLog.has(x.pk)).concat(log).slice(0, 500);
-    LS.set(logKey, log);
-    LS.set(snapKey, { date: now, f: [...followers.values()].map((u) => u.pk + ':' + u.u) });
+    if (skip) {
+      fresh.length = 0;
+      freshPks.clear();
+      newFollowers = 0;
+    } else {
+      const inLog = new Set(log.map((x) => x.pk));
+      log = fresh.filter((x) => !inLog.has(x.pk)).concat(log).slice(0, 500);
+      LS.set(logKey, log);
+      LS.set(snapKey, { date: now, f: [...followers.values()].map((u) => u.pk + ':' + u.u) });
+    }
 
     const unfollowers = log.map((x, i) => {
       const g = following.get(x.pk);
@@ -626,6 +643,7 @@ h2,p{margin:0}
       fresh: unfollowers.filter((x) => freshPks.has(x.pk)),
       newFollowers,
       prevDate: prev ? prev.date : null,
+      skip, skipCount,
       followingMap: following,
       followersMap: followers,
     };
@@ -739,6 +757,24 @@ h2,p{margin:0}
 
   function banner() {
     const d = state.data;
+    if (d.skip === 'incomplete') {
+      return h('div', { class: 'card banner amber' },
+        h('span', { class: 'banner-ic' }, icon('alert')),
+        h('div', { class: 'banner-body' },
+          h('strong', null, 'Data pengikut belum lengkap'),
+          h('span', null, 'Instagram hanya mengirim ' + nf(d.followers.length) + ' dari ' + nf(state.me.followers) +
+            ' pengikut. Agar tidak salah, daftar "Berhenti mengikuti" tidak diperbarui pada pemeriksaan ini. Coba Cek ulang beberapa saat lagi.')));
+    }
+    if (d.skip === 'suspicious') {
+      return h('div', { class: 'card banner amber' },
+        h('span', { class: 'banner-ic' }, icon('alert')),
+        h('div', { class: 'banner-body' },
+          h('strong', null, 'Perubahan tidak wajar, belum dicatat'),
+          h('span', null, nf(d.skipCount) + ' akun terlihat hilang sekaligus sejak pemeriksaan ' + fd(d.prevDate) +
+            '. Biasanya ini karena data dari Instagram belum lengkap. Coba Cek ulang beberapa saat lagi.')),
+        h('div', { class: 'banner-actions' },
+          h('button', { class: 'btn ghost sm', onclick: () => { state.data = analyze(state.maps.following, state.maps.followers, true); showResults(); } }, 'Tetap simpan')));
+    }
     if (!d.prevDate) {
       return h('div', { class: 'card banner info' },
         h('span', { class: 'banner-ic' }, icon('info')),
@@ -760,6 +796,7 @@ h2,p{margin:0}
 
   function accuracyNote() {
     const d = state.data, me = state.me, gaps = [];
+    if (d.skip === 'incomplete') return null; // sudah dijelaskan di banner
     if (me.following && d.following.length < me.following * 0.97) gaps.push(nf(d.following.length) + ' dari ' + nf(me.following) + ' akun yang diikuti');
     if (me.followers && d.followers.length < me.followers * 0.97) gaps.push(nf(d.followers.length) + ' dari ' + nf(me.followers) + ' pengikut');
     if (!gaps.length) return null;

@@ -22,6 +22,16 @@ Periksa siapa yang tidak follow balik, akun mutual, dan akun yang berhenti mengi
 - Password tidak pernah diminta. Script memakai sesi login Instagram yang sudah ada di browser.
 - Semua data diproses di browser pengguna dan tidak dikirim ke server mana pun.
 - Riwayat pemeriksaan (untuk mendeteksi siapa yang berhenti mengikuti) disimpan di `localStorage` browser masing-masing.
+- Halaman tidak memuat apa pun dari pihak ketiga (tanpa CDN/Google Fonts) dan dilindungi Content-Security-Policy.
+  `vendor/jszip.min.js` (JSZip 3.10.1, MIT) disertakan langsung dan sudah dicocokkan dengan hash SRI resmi cdnjs.
+- Script hanya melakukan permintaan **baca** (GET) ke Instagram; tidak ada aksi follow/unfollow/like.
+
+## Pengaman akurasi
+
+Agar tidak salah menuduh seseorang berhenti mengikuti:
+- Jika jumlah pengikut yang diterima jauh lebih sedikit dari angka di profil, hasil tidak dicatat ke riwayat.
+- Jika lebih dari 30% (minimal 20 akun) hilang sekaligus, perubahan ditahan sampai pengguna memilih **Tetap simpan**.
+- Riwayat mode unggah hanya disimpan bila nama akun terdeteksi dari file ZIP asli; mode tempel tidak menyimpan riwayat.
 
 ## Catatan
 

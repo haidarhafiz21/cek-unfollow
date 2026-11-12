@@ -661,3 +661,6 @@ textarea:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3p
   #guideBtn { width: 34px; padding: 0; }
   .topbar-actions .btn.sm span:only-of-type { white-space: nowrap; }
 }
+.console-warn { margin: 0 12px 12px; padding: 10px 12px; border-radius: 8px; background: var(--red-bg); color: var(--text); font-size: 13px; }
+.console-warn b { font-weight: 600; }
+.changes-body code { font-size: .85em; }

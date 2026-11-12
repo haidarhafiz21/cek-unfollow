@@ -16,9 +16,8 @@
   <meta property="og:image" content="https://haidarhafiz21.github.io/cek-unfollow/og.png">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="stylesheet" href="styles.css">
   <script src="cekunfollow.js" defer></script>
   <script src="tutorial.js" defer></script>
@@ -305,6 +304,14 @@
         <details>
           <summary>Apakah aman? Apakah password saya diminta?</summary>
           <p>Password tidak pernah diminta. Script berjalan di browser kamu sendiri menggunakan sesi Instagram yang sudah login, dan tidak mengirim data ke server lain. Kode sumbernya terbuka dan dapat diperiksa di <a class="inline-link" href="https://github.com/haidarhafiz21/cek-unfollow" target="_blank" rel="noopener">GitHub</a>.</p>
+        </details>
+        <details>
+          <summary>Bagaimana memastikan saya memakai versi asli?</summary>
+          <p>Pasang bookmark hanya dari alamat resmi <b>haidarhafiz21.github.io/cek-unfollow</b>. Jangan memasang bookmark atau menempel script yang dikirim orang lain lewat chat, karena penipu sering meniru alat seperti ini untuk membajak akun Instagram.</p>
+        </details>
+        <details>
+          <summary>Muncul pesan "Data pengikut belum lengkap" atau "Perubahan tidak wajar"</summary>
+          <p>Ini pengaman agar aplikasi tidak salah menuduh seseorang berhenti mengikuti. Jika Instagram tidak mengirim seluruh daftar pengikut, hasil pemeriksaan tersebut tidak dicatat ke riwayat. Tunggu beberapa saat lalu jalankan Cek ulang. Jika penurunannya memang nyata (misalnya akun palsu dihapus Instagram), pilih <b>Tetap simpan</b>.</p>
         </details>
         <details>
           <summary>Muncul pesan "Belum login"</summary>

@@ -13,6 +13,7 @@
 
   /* ---------------- Icons ---------------- */
   const ICON = {
+    alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17v.01"/></svg>',
     inbox: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5l1.5 3h5L16 13h5"/><path d="M5.5 5h13L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5l2.5-8z"/></svg>',
     search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
     userX: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="m17 8 4 4M21 8l-4 4"/></svg>',
@@ -209,7 +210,7 @@
       if (!acc.following.size) throw new Error('File following.json belum ada. Unggah juga file "following" agar bisa dibandingkan.');
       if (!acc.followers.size) throw new Error('File followers_1.json belum ada. Unggah juga file "followers" agar bisa dibandingkan.');
 
-      showResult(analyze(acc));
+      showResult(analyze(acc, { source: 'file' }));
     } catch (err) {
       console.error(err);
       showError(err.message || 'Gagal membaca file. Silakan coba lagi.');
@@ -234,8 +235,12 @@
 
     const curF = [...followers.keys()].sort();
     const curG = [...following.keys()].sort();
-    const histKey = 'cu:snap:' + (acc.owner || 'default');
-    const history = opts.demoHistory || store.get(histKey, []);
+
+    // Riwayat hanya dipakai bila akun pemilik diketahui (ZIP asli Instagram).
+    // Tanpa nama akun, data dua akun berbeda bisa tercampur dan menghasilkan tuduhan unfollow palsu.
+    const canTrack = !!acc.owner && !opts.demo && opts.source !== 'paste';
+    const histKey = 'cu:snap:' + acc.owner;
+    const history = opts.demoHistory || (canTrack ? store.get(histKey, []) : []);
 
     // Bandingkan dengan snapshot terakhir yang berbeda dari data sekarang
     let prev = null;
@@ -243,14 +248,22 @@
       if (!sameSets(history[i], curF, curG)) { prev = history[i]; break; }
     }
 
-    let unfollowers = null, newFollowers = null;
+    let unfollowers = null, newFollowers = null, skip = null, skipCount = 0;
     if (prev) {
       const prevF = new Set(prev.followers);
       unfollowers = prev.followers.filter((u) => !followers.has(u)).map((u) => ({ u, ts: 0 }));
       newFollowers = curF.filter((u) => !prevF.has(u));
+      // Penurunan besar sekaligus hampir selalu berarti file pengikut tidak lengkap
+      // (mis. followers_2.json tidak ikut). Jangan dicatat tanpa konfirmasi.
+      if (!opts.force && unfollowers.length > Math.max(20, prev.followers.length * 0.3)) {
+        skip = 'suspicious';
+        skipCount = unfollowers.length;
+        unfollowers = null;
+        newFollowers = [];
+      }
     }
 
-    if (!opts.demo) {
+    if (canTrack && !skip) {
       const last = history[history.length - 1];
       if (!sameSets(last, curF, curG)) {
         history.push({ date: Date.now(), exportDate: acc.exportDate || '', followers: curF, following: curG });
@@ -263,7 +276,8 @@
     }
 
     return {
-      owner: acc.owner, exportDate: acc.exportDate, demo: !!opts.demo, histKey,
+      owner: acc.owner, exportDate: acc.exportDate, demo: !!opts.demo, source: opts.source || 'file',
+      canTrack, skip, skipCount, acc,
       followers, following, pending,
       lists: {
         notBack, mutual, fans,
@@ -436,7 +450,7 @@
       showError('Isi kedua kolom: daftar pengikut dan daftar akun yang kamu ikuti.');
       return;
     }
-    showResult(analyze(acc));
+    showResult(analyze(acc, { source: 'paste' }));
   });
 
   $('#demoBtn').addEventListener('click', () => {
@@ -515,6 +529,19 @@
   function renderChanges() {
     const d = state.data;
     const box = $('#changes');
+    if (d.skip === 'suspicious') {
+      box.innerHTML = `
+        <div class="card changes alert-amber">
+          <span class="changes-icon">${ICON.alert}</span>
+          <div class="changes-body">
+            <strong>Perubahan tidak wajar, belum dicatat</strong>
+            <span>${fmtNum(d.skipCount)} akun terlihat hilang sekaligus sejak pemeriksaan ${esc(fmtDateMs(d.prev.date))}. Biasanya ini karena file pengikut tidak lengkap (misalnya <code>followers_2.json</code> tidak ikut). Periksa kembali file yang diunggah.</span>
+          </div>
+          <div class="changes-actions"><button class="btn ghost sm" id="forceSave">Tetap simpan</button></div>
+        </div>`;
+      $('#forceSave').addEventListener('click', () => showResult(analyze(d.acc, { source: d.source, force: true })));
+      return;
+    }
     if (d.prev) {
       const un = d.lists.unfollowers, nf = d.newFollowers;
       const when = fmtDateMs(d.prev.date);
@@ -534,6 +561,15 @@
         </div>`;
     } else if (d.demo) {
       box.innerHTML = '';
+    } else if (!d.canTrack) {
+      const msg = d.source === 'paste'
+        ? 'Mode tempel tidak menyimpan riwayat. Untuk melacak akun yang berhenti mengikuti, gunakan mode Langsung atau unggah file ZIP asli dari Instagram.'
+        : 'Nama akun tidak terdeteksi, sehingga riwayat tidak disimpan. Unggah file ZIP asli dari Instagram (tanpa diekstrak) untuk melacak akun yang berhenti mengikuti.';
+      box.innerHTML = `
+        <div class="card changes info">
+          <span class="changes-icon">${ICON.info}</span>
+          <div class="changes-body"><strong>Riwayat tidak disimpan</strong><span>${msg}</span></div>
+        </div>`;
     } else {
       box.innerHTML = `
         <div class="card changes info">
