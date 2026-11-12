@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cek Unfollow</title>
+  <meta name="description" content="Periksa siapa yang tidak follow balik, akun mutual, dan akun yang berhenti mengikuti di Instagram. Gratis, tanpa password, diproses di browser.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cek Unfollow">
+  <meta property="og:title" content="Cek Unfollow: siapa yang tidak follow balik?">
+  <meta property="og:description" content="Periksa akun yang tidak follow balik, akun mutual, dan siapa yang berhenti mengikuti. Gratis dan tanpa password.">
+  <meta property="og:url" content="https://haidarhafiz21.github.io/cek-unfollow/">
+  <meta property="og:image" content="https://haidarhafiz21.github.io/cek-unfollow/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <script src="cekunfollow.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="./">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 11l2 2 4-4"/></svg>
+        </span>
+        <span>Cek Unfollow</span>
+      </a>
+      <div class="topbar-actions">
+        <button id="resetBtn" class="btn ghost sm" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>Cek ulang</span>
+        </button>
+        <button id="shareBtn" class="btn ghost sm" title="Bagikan halaman ini">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+          <span>Bagikan</span>
+        </button>
+        <button id="themeBtn" class="icon-btn" aria-label="Ganti tema terang/gelap" title="Ganti tema">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ============ HALAMAN AWAL ============ -->
+    <section id="uploadView" class="view">
+      <div id="inAppNote" class="inapp" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg>
+        <p>Halaman ini dibuka dari dalam aplikasi. Agar dapat digunakan, buka di <b>Chrome</b> atau <b>Safari</b> melalui menu <b>⋮</b> lalu <b>Buka di browser</b>.</p>
+      </div>
+
+      <div class="hero">
+        <h1>Periksa siapa yang tidak follow balik</h1>
+        <p class="lead">Lihat akun mutual, akun yang tidak mengikuti balik, dan akun yang berhenti mengikuti Instagram kamu. Gratis dan tanpa password.</p>
+      </div>
+
+      <div class="card panel">
+        <div class="seg" role="tablist" aria-label="Metode" data-mode="direct">
+          <button role="tab" class="seg-btn active" data-mode="direct" aria-selected="true">Langsung</button>
+          <button role="tab" class="seg-btn" data-mode="file" aria-selected="false">Unggah file</button>
+          <button role="tab" class="seg-btn" data-mode="paste" aria-selected="false">Tempel daftar</button>
+          <span class="seg-indicator" aria-hidden="true"></span>
+        </div>
+
+        <!-- Mode langsung -->
+        <div id="modeDirect" class="mode" data-mode="direct">
+          <div class="device-tabs" role="tablist" aria-label="Perangkat">
+            <button class="dev-btn" data-device="desktop">Komputer</button>
+            <button class="dev-btn" data-device="android">Android</button>
+            <button class="dev-btn" data-device="ios">iPhone / iPad</button>
+          </div>
+
+          <!-- Komputer -->
+          <ol class="quick-steps" data-dev="desktop">
+            <li>
+              <span class="qs-num">1</span>
+              <div class="qs-body">
+                <strong>Tambahkan tombol ke bookmark bar</strong>
+                <span>Tahan klik pada tombol di bawah, seret ke bookmark bar, lalu lepaskan. Tekan <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>B</kbd> jika bookmark bar tidak terlihat.</span>
+                <a id="bookmarklet" class="bm-btn" href="#" title="Seret ke bookmark bar">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+                  Cek Unfollow
+                </a>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">2</span>
+              <div class="qs-body">
+                <strong>Buka Instagram dan login</strong>
+                <span>Gunakan browser yang sama. <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="inline-link">Buka instagram.com</a></span>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">3</span>
+              <div class="qs-body">
+                <strong>Klik bookmark Cek Unfollow</strong>
+                <span>Hasil pemeriksaan ditampilkan langsung di halaman Instagram.</span>
+              </div>
+            </li>
+          </ol>
+
+          <!-- Android -->
+          <ol class="quick-steps" data-dev="android" hidden>
+            <li>
+              <span class="qs-num">1</span>
+              <div class="qs-body">
+                <strong>Salin kode bookmark</strong>
+                <span>Gunakan browser <b>Chrome</b>.</span>
+                <button class="btn primary sm copy-bm">Salin kode bookmark</button>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">2</span>
+              <div class="qs-body">
+                <strong>Simpan sebagai bookmark</strong>
+                <span>Ketuk menu <b>⋮</b>, lalu ikon <b>☆</b> untuk menyimpan halaman ini. Ketuk <b>Edit</b> pada notifikasi yang muncul, ubah nama menjadi <b>Cek Unfollow</b>, hapus isi kolom URL, lalu tempel kode tadi.</span>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">3</span>
+              <div class="qs-body">
+                <strong>Buka instagram.com di Chrome dan login</strong>
+                <span>Gunakan Chrome, bukan aplikasi Instagram. <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="inline-link">Buka instagram.com</a></span>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">4</span>
+              <div class="qs-body">
+                <strong>Jalankan bookmark</strong>
+                <span>Ketuk kolom alamat, ketik <b>Cek Unfollow</b>, lalu ketuk bookmark yang muncul di daftar saran.</span>
+              </div>
+            </li>
+          </ol>
+
+          <!-- iPhone / iPad -->
+          <ol class="quick-steps" data-dev="ios" hidden>
+            <li>
+              <span class="qs-num">1</span>
+              <div class="qs-body">
+                <strong>Salin kode bookmark</strong>
+                <span>Gunakan browser <b>Safari</b>.</span>
+                <button class="btn primary sm copy-bm">Salin kode bookmark</button>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">2</span>
+              <div class="qs-body">
+                <strong>Simpan halaman ini sebagai penanda</strong>
+                <span>Ketuk ikon <b>Bagikan</b>, pilih <b>Tambah Penanda</b>, lalu <b>Simpan</b>.</span>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">3</span>
+              <div class="qs-body">
+                <strong>Ubah alamat penanda</strong>
+                <span>Buka <b>Penanda</b> (ikon buku), ketuk <b>Edit</b>, lalu pilih penanda tadi. Ganti nama menjadi <b>Cek Unfollow</b>, hapus alamatnya, tempel kode tadi, lalu ketuk <b>Selesai</b>.</span>
+              </div>
+            </li>
+            <li>
+              <span class="qs-num">4</span>
+              <div class="qs-body">
+                <strong>Buka instagram.com di Safari, lalu jalankan</strong>
+                <span>Setelah login, buka <b>Penanda</b> dan ketuk <b>Cek Unfollow</b>. <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="inline-link">Buka instagram.com</a></span>
+              </div>
+            </li>
+          </ol>
+
+          <div class="direct-actions">
+            <button class="btn ghost" id="previewBtn">Lihat contoh hasil</button>
+          </div>
+
+          <details class="console-alt" data-dev="desktop">
+            <summary>Alternatif: jalankan lewat Console</summary>
+            <ol>
+              <li>Buka <b>instagram.com</b> dan pastikan sudah login.</li>
+              <li>Tekan <kbd>F12</kbd>, lalu pilih tab <b>Console</b>.</li>
+              <li>Salin script dengan tombol di bawah, tempel di Console, lalu tekan <kbd>Enter</kbd>.</li>
+              <li>Jika Chrome menolak paste, ketik <code>allow pasting</code>, tekan Enter, lalu tempel kembali.</li>
+            </ol>
+            <button class="btn ghost sm" id="copyScriptBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
+              Salin script
+            </button>
+          </details>
+
+          <p class="mobile-alt" data-dev="android ios" hidden>Bookmark tidak dapat dijalankan dari aplikasi Instagram. Jika langkah di atas tidak berhasil, gunakan tab <button class="link-btn" data-goto-mode="file">Unggah file</button> dengan data ekspor dari aplikasi Instagram.</p>
+
+          <div class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3z"/></svg>
+            <p><b>Password tidak diminta.</b> Script berjalan di browser kamu menggunakan sesi Instagram yang sudah login dan tidak mengirim data ke server lain. Gunakan secukupnya (1–2 kali sehari) untuk menghindari pembatasan sementara dari Instagram.</p>
+          </div>
+        </div>
+
+        <!-- Mode unggah file -->
+        <div id="modeFile" class="mode" data-mode="file" hidden>
+          <label class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" multiple accept=".zip,.json,.html,.htm">
+            <span class="dz-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+            </span>
+            <span class="dz-idle">
+              <strong>Pilih atau tarik file ke sini</strong>
+              <span>atau <u>pilih dari perangkat</u></span>
+              <small>ZIP ekspor Instagram, atau <code>followers_1.json</code> dan <code>following.json</code></small>
+            </span>
+            <span class="dz-loading">
+              <span class="spinner" aria-hidden="true"></span>
+              <strong>Membaca data…</strong>
+            </span>
+          </label>
+        </div>
+
+        <!-- Mode tempel -->
+        <div id="modePaste" class="mode" data-mode="paste" hidden>
+          <div class="paste-grid">
+            <label class="field">
+              <span class="field-label">Pengikut <em>(followers)</em></span>
+              <textarea id="pasteFollowers" spellcheck="false" placeholder="nadia.putri&#10;raka_99&#10;@dimas.id"></textarea>
+            </label>
+            <label class="field">
+              <span class="field-label">Mengikuti <em>(following)</em></span>
+              <textarea id="pasteFollowing" spellcheck="false" placeholder="sekar.art&#10;nadia.putri&#10;https://instagram.com/bayu"></textarea>
+            </label>
+          </div>
+          <p class="hint">Satu username per baris. Format @username dan link profil juga diterima.</p>
+          <button class="btn primary block" id="pasteBtn">Analisis</button>
+        </div>
+
+        <p id="errorMsg" class="alert" role="alert" hidden></p>
+
+        <div class="upload-foot" id="uploadFoot" hidden>
+          <span>Belum punya data?</span>
+          <button class="link-btn" id="demoBtn">Gunakan data contoh</button>
+        </div>
+      </div>
+
+      <details class="card guide" id="exportGuide" hidden>
+        <summary>
+          <svg class="guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg>
+          <span>Cara mengekspor data dari Instagram</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <ol class="steps">
+          <li>Buka aplikasi Instagram, masuk ke <b>Profil</b>, menu <b>☰</b>, lalu <b>Pusat Akun</b>.</li>
+          <li>Pilih <b>Informasi dan izin Anda</b>, <b>Ekspor informasi Anda</b>, lalu <b>Buat ekspor</b>.</li>
+          <li>Pilih akun, lalu <b>Ekspor ke perangkat</b>.</li>
+          <li>Di <b>Sesuaikan informasi</b>, pilih hanya <b>Pengikut dan mengikuti</b>.</li>
+          <li>Atur <b>Rentang tanggal: Sepanjang waktu</b> dan <b>Format: JSON</b>, lalu mulai ekspor.</li>
+          <li>Setelah notifikasi diterima, unduh file ZIP dan unggah di sini.</li>
+        </ol>
+        <p class="guide-note">Hasil setiap pemeriksaan disimpan di browser. Saat data yang lebih baru diunggah, aplikasi akan menampilkan akun yang <b>berhenti mengikuti</b> sejak pemeriksaan sebelumnya.</p>
+      </details>
+    </section>
+
+    <!-- ============ HASIL ============ -->
+    <section id="resultView" class="view" hidden>
+      <div class="result-head">
+        <p class="eyebrow" id="resultEyebrow">Hasil analisis</p>
+        <h2 id="resultTitle">Ringkasan akun</h2>
+        <p class="muted" id="resultMeta"></p>
+      </div>
+
+      <div id="changes"></div>
+
+      <div class="card kpis" id="stats"></div>
+
+      <div class="card list-card">
+        <div class="tabs-wrap">
+          <div class="tabs" id="tabs" role="tablist"></div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="searchInput" type="search" placeholder="Cari username" autocomplete="off">
+          </label>
+          <div class="toolbar-right">
+            <label class="select">
+              <select id="sortSelect" aria-label="Urutkan">
+                <option value="new">Terbaru</option>
+                <option value="old">Terlama</option>
+                <option value="az">A–Z</option>
+                <option value="za">Z–A</option>
+              </select>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </label>
+            <button class="btn ghost sm" id="copyBtn" title="Salin daftar username">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
+              <span>Salin</span>
+            </button>
+            <button class="btn ghost sm" id="csvBtn" title="Unduh sebagai CSV">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></svg>
+              <span>CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="list-meta" id="listMeta"></div>
+        <ul class="list" id="list"></ul>
+        <div id="sentinel" aria-hidden="true"></div>
+        <div class="empty" id="empty" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p>Data diproses di browser dan tidak dikirim ke server. Tidak berafiliasi dengan Instagram atau Meta.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
