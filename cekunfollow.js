@@ -280,6 +280,7 @@ h2,p{margin:0}
 .ratio-bar{flex:1 1 160px;height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden}
 .ratio-fill{display:block;height:100%;width:0;border-radius:99px;background:var(--green);transition:width .6s ease}
 .ratio-desc{font-size:12.5px;color:var(--muted)}
+.kpi-note{padding:10px 16px 12px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
 
 .list-card{overflow:hidden;scroll-margin-top:72px}
 .tabs-wrap{border-bottom:1px solid var(--border)}
@@ -461,39 +462,85 @@ h2,p{margin:0}
     return data;
   }
 
+  // Info akun yang sedang login: username, foto, dan angka resmi di profil.
+  // Beberapa endpoint Instagram tidak tersedia di versi web, jadi dicoba berurutan.
+  // Setiap kandidat username diverifikasi dengan ID akun agar tidak tertukar dengan akun lain.
   async function viewerInfo(signal) {
     const me = { uid: MOCK ? MOCK.uid : cookie('ds_user_id'), username: '', name: '', pic: '', followers: null, following: null };
-    const steps = [
-      async () => {
+    const note = (m) => console.info('[Cek Unfollow] ' + m);
+    const valid = (u) => typeof u === 'string' && /^[A-Za-z0-9._]{1,30}$/.test(u);
+    const tried = new Set();
+
+    async function verify(username, source) {
+      if (!valid(username)) return false;
+      username = username.toLowerCase();
+      if (tried.has(username)) return false;
+      tried.add(username);
+      const d = await api('/api/v1/users/web_profile_info/?username=' + encodeURIComponent(username), signal);
+      const u = (d.data && d.data.user) || {};
+      if (me.uid && u.id && String(u.id) !== String(me.uid)) { note('kandidat dari ' + source + ' bukan akun ini'); return false; }
+      me.uid = me.uid || String(u.id || '');
+      me.username = username;
+      me.name = u.full_name || me.name;
+      me.pic = u.profile_pic_url_hd || u.profile_pic_url || me.pic;
+      if (u.edge_followed_by) me.followers = u.edge_followed_by.count;
+      if (u.edge_follow) me.following = u.edge_follow.count;
+      note('info akun dari ' + source);
+      return true;
+    }
+
+    function pageCandidates() {
+      if (MOCK || !me.uid) return [];
+      const out = [];
+      try {
+        const html = document.documentElement.innerHTML;
+        const id = String(me.uid).replace(/\D/g, '');
+        const pats = [
+          new RegExp('"(?:id|pk|pk_id)"\\s*:\\s*"?' + id + '(?!\\d)"?[^{}]{0,500}?"username"\\s*:\\s*"([A-Za-z0-9._]{1,30})"', 'g'),
+          new RegExp('"username"\\s*:\\s*"([A-Za-z0-9._]{1,30})"[^{}]{0,500}?"(?:id|pk|pk_id)"\\s*:\\s*"?' + id + '(?!\\d)', 'g'),
+        ];
+        for (const re of pats) {
+          let m;
+          while ((m = re.exec(html)) && out.length < 4) if (!out.includes(m[1])) out.push(m[1]);
+        }
+      } catch (e) { /* abaikan */ }
+      return out;
+    }
+
+    const sources = [
+      ['data halaman', async () => pageCandidates()],
+      ['web_form_data', async () => {
+        const d = await api('/api/v1/accounts/edit/web_form_data/', signal);
+        return [d.form_data && d.form_data.username];
+      }],
+      ['current_user', async () => {
         const d = await api('/api/v1/accounts/current_user/?edit=true', signal);
         const u = d.user || {};
         me.uid = me.uid || String(u.pk_id || u.pk || '');
-        me.username = u.username || me.username;
-        me.name = u.full_name || me.name;
-        me.pic = u.profile_pic_url || me.pic;
-      },
-      async () => {
-        if (!me.username) return;
-        const d = await api('/api/v1/users/web_profile_info/?username=' + encodeURIComponent(me.username), signal);
-        const u = (d.data && d.data.user) || {};
-        me.pic = u.profile_pic_url || me.pic;
-        if (u.edge_followed_by) me.followers = u.edge_followed_by.count;
-        if (u.edge_follow) me.following = u.edge_follow.count;
-      },
-      async () => {
-        if (me.followers != null || !me.uid) return;
+        return [u.username];
+      }],
+      ['users/info', async () => {
+        if (!me.uid) return [];
         const d = await api('/api/v1/users/' + me.uid + '/info/', signal);
         const u = d.user || {};
-        me.username = me.username || u.username || '';
+        if (valid(u.username) && !me.username) me.username = u.username.toLowerCase();
         me.pic = me.pic || u.profile_pic_url || '';
         if (u.follower_count != null) me.followers = u.follower_count;
         if (u.following_count != null) me.following = u.following_count;
-      },
+        return [u.username];
+      }],
     ];
-    for (const step of steps) {
-      try { await step(); } catch (e) { if (e.name === 'AbortError') throw e; }
-      await sleep(350, signal);
+
+    for (const [name, get] of sources) {
+      let list = [];
+      try { list = (await get()) || []; } catch (e) { if (e.name === 'AbortError') throw e; note(name + ' tidak tersedia: ' + e.message); }
+      for (const cand of list) {
+        try { if (await verify(cand, name)) return me; } catch (e) { if (e.name === 'AbortError') throw e; note('verifikasi gagal: ' + e.message); }
+        await sleep(300, signal);
+      }
+      if (name !== 'data halaman') await sleep(300, signal);
     }
+    if (!me.username) note('username tidak ditemukan; pemeriksaan tetap dilanjutkan');
     return me;
   }
 
@@ -832,7 +879,22 @@ h2,p{margin:0}
       h('div', { class: 'ratio' },
         h('div', { class: 'ratio-head' }, h('span', { class: 'ratio-label' }, 'Rasio follow balik'), h('strong', null, pct + '%')),
         h('div', { class: 'ratio-bar' }, fill),
-        h('p', { class: 'ratio-desc' }, nf(d.mutual.length) + ' dari ' + nf(d.following.length) + ' akun yang kamu ikuti mengikuti balik')));
+        h('p', { class: 'ratio-desc' }, nf(d.mutual.length) + ' dari ' + nf(d.following.length) + ' akun yang kamu ikuti mengikuti balik')),
+      countNote());
+  }
+
+  // Selisih kecil dengan angka di profil (biasanya akun yang dinonaktifkan) dijelaskan agar tidak membingungkan.
+  function countNote() {
+    const d = state.data, me = state.me;
+    if (me.followers == null || me.following == null || d.skip === 'incomplete') return null;
+    const gapF = me.followers - d.followers.length;
+    const gapG = me.following - d.following.length;
+    if (gapF <= 0 && gapG <= 0) return null;
+    const big = d.following.length < me.following * 0.97 || d.followers.length < me.followers * 0.97;
+    if (big) return null; // sudah dijelaskan oleh accuracyNote
+    return h('p', { class: 'kpi-note' },
+      'Profil Instagram mencatat ' + nf(me.following) + ' mengikuti dan ' + nf(me.followers) + ' pengikut. ' +
+      'Selisih kecil seperti ini wajar: akun yang sedang dinonaktifkan atau dibatasi tetap dihitung oleh Instagram, tetapi tidak ditampilkan di daftar.');
   }
 
   function listCard() {

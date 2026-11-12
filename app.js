@@ -423,7 +423,7 @@
       api(path) {
         const url = new URL(path, 'https://x.invalid');
         if (url.pathname.includes('/current_user/')) return { user: { pk: '1', username: 'kamu.demo', full_name: 'Kamu', profile_pic_url: '' }, status: 'ok' };
-        if (url.pathname.includes('/web_profile_info/')) return { data: { user: { edge_followed_by: { count: followers.length }, edge_follow: { count: following.length } } }, status: 'ok' };
+        if (url.pathname.includes('/web_profile_info/')) return { data: { user: { id: '1', edge_followed_by: { count: followers.length }, edge_follow: { count: following.length } } }, status: 'ok' };
         if (url.pathname.endsWith('/following/')) return page(following, url.searchParams);
         if (url.pathname.endsWith('/followers/')) return page(followers, url.searchParams);
         return { status: 'ok' };
