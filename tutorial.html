@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panduan Cek Unfollow</title>
+  <meta name="description" content="Panduan langkah demi langkah memakai Cek Unfollow di komputer, Android, dan iPhone.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Cek Unfollow">
+  <meta property="og:title" content="Panduan Cek Unfollow: komputer, Android, dan iPhone">
+  <meta property="og:description" content="Langkah demi langkah memeriksa siapa yang tidak follow balik di Instagram.">
+  <meta property="og:url" content="https://haidarhafiz21.github.io/cek-unfollow/tutorial.html">
+  <meta property="og:image" content="https://haidarhafiz21.github.io/cek-unfollow/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="cekunfollow.js" defer></script>
+  <script src="tutorial.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="./">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 11l2 2 4-4"/></svg>
+        </span>
+        <span>Cek Unfollow</span>
+      </a>
+      <div class="topbar-actions">
+        <a class="btn ghost sm" href="./">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span>Kembali</span>
+        </a>
+        <button id="themeBtn" class="icon-btn" aria-label="Ganti tema terang/gelap" title="Ganti tema">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container doc">
+    <div class="doc-head">
+      <p class="eyebrow">Panduan</p>
+      <h1>Cara menggunakan Cek Unfollow</h1>
+      <p class="lead">Pilih perangkat yang kamu gunakan. Pemasangan cukup dilakukan sekali, setelah itu pemeriksaan bisa dijalankan kapan saja.</p>
+    </div>
+
+    <nav class="doc-tabs" role="tablist" aria-label="Pilih perangkat">
+      <a href="#komputer" class="doc-tab" data-tab="komputer" role="tab">Komputer</a>
+      <a href="#android" class="doc-tab" data-tab="android" role="tab">Android</a>
+      <a href="#iphone" class="doc-tab" data-tab="iphone" role="tab">iPhone / iPad</a>
+      <a href="#file" class="doc-tab" data-tab="file" role="tab">Unggah file</a>
+      <a href="#faq" class="doc-tab" data-tab="faq" role="tab">Tanya jawab</a>
+    </nav>
+
+    <!-- ================= KOMPUTER ================= -->
+    <section class="doc-section" id="sec-komputer" data-sec="komputer">
+      <div class="doc-intro">
+        <h2>Komputer / Laptop</h2>
+        <p>Gunakan <b>Google Chrome</b>, <b>Microsoft Edge</b>, atau <b>Firefox</b>.</p>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 1</span> Pasang bookmark (sekali saja)</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Tampilkan bookmark bar</strong>
+            <p>Tekan <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>B</kbd> (Mac: <kbd>⌘</kbd> <kbd>Shift</kbd> <kbd>B</kbd>). Bookmark bar muncul di bawah kolom alamat.</p>
+          </li>
+          <li>
+            <strong>Seret tombol berikut ke bookmark bar</strong>
+            <p>Tahan klik pada tombol, geser ke bookmark bar, lalu lepaskan.</p>
+            <a id="bookmarklet" class="bm-btn" href="#" title="Seret ke bookmark bar">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+              Cek Unfollow
+            </a>
+          </li>
+          <li>
+            <strong>Pastikan bookmark sudah ada</strong>
+            <p>Bookmark bernama <span class="ui">Cek Unfollow</span> akan terlihat di bookmark bar.</p>
+            <div class="tip"><b>Tidak bisa diseret?</b> Klik kanan tombol di atas, pilih <span class="ui">Salin alamat link</span>. Lalu klik kanan bookmark bar, pilih <span class="ui">Tambahkan halaman…</span>, isi nama <b>Cek Unfollow</b>, tempel di kolom URL, dan simpan.</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 2</span> Jalankan pemeriksaan</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka instagram.com dan login</strong>
+            <p>Gunakan browser yang sama dengan tempat bookmark dipasang. <a class="inline-link" href="https://www.instagram.com/" target="_blank" rel="noopener">Buka instagram.com</a></p>
+          </li>
+          <li>
+            <strong>Klik bookmark Cek Unfollow</strong>
+            <p>Panel Cek Unfollow muncul di atas halaman Instagram dan mulai mengambil data.</p>
+          </li>
+          <li>
+            <strong>Tunggu hingga selesai</strong>
+            <p>Biasanya 1–3 menit, tergantung jumlah akun. Biarkan tab tetap terbuka.</p>
+          </li>
+          <li>
+            <strong>Baca hasilnya</strong>
+            <p>Klik angka di panel ringkasan atau tab di atas daftar untuk berpindah kategori. Tekan <kbd>Esc</kbd> untuk kembali ke Instagram.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= ANDROID ================= -->
+    <section class="doc-section" id="sec-android" data-sec="android" hidden>
+      <div class="doc-intro">
+        <h2>Android</h2>
+        <p>Gunakan browser <b>Google Chrome</b>. Cara ini tidak dapat dijalankan dari aplikasi Instagram.</p>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 1</span> Pasang bookmark (sekali saja)</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka halaman ini di Chrome</strong>
+            <p>Jika halaman dibuka dari WhatsApp atau Instagram, ketuk <span class="ui">⋮</span> lalu <span class="ui">Buka di Chrome</span>.</p>
+          </li>
+          <li>
+            <strong>Salin kode bookmark</strong>
+            <p>Ketuk tombol berikut. Kode akan tersalin otomatis.</p>
+            <button class="btn primary sm copy-bm">Salin kode bookmark</button>
+          </li>
+          <li>
+            <strong>Simpan halaman ini sebagai bookmark</strong>
+            <p>Ketuk <span class="ui">⋮</span> di pojok kanan atas, lalu ketuk ikon bintang <span class="ui">☆</span>.</p>
+          </li>
+          <li>
+            <strong>Buka pengaturan bookmark</strong>
+            <p>Di bagian bawah layar muncul notifikasi <i>Bookmark disimpan</i>. Ketuk <span class="ui">Edit</span>.</p>
+            <div class="tip"><b>Notifikasi terlewat?</b> Ketuk <span class="ui">⋮</span>, pilih <span class="ui">Bookmark</span>, cari bookmark tersebut, tekan lama, lalu pilih <span class="ui">Edit</span>.</div>
+          </li>
+          <li>
+            <strong>Ubah nama dan alamat</strong>
+            <p>Ganti <b>Nama</b> menjadi <span class="ui">Cek Unfollow</span>. Hapus seluruh isi kolom <b>URL</b>, tekan lama, lalu pilih <span class="ui">Tempel</span>.</p>
+          </li>
+          <li>
+            <strong>Simpan</strong>
+            <p>Ketuk tombol kembali <span class="ui">←</span>. Perubahan tersimpan otomatis.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 2</span> Jalankan pemeriksaan</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka instagram.com di Chrome dan login</strong>
+            <p>Jika diminta membuka aplikasi, pilih tetap di browser. <a class="inline-link" href="https://www.instagram.com/" target="_blank" rel="noopener">Buka instagram.com</a></p>
+          </li>
+          <li>
+            <strong>Ketik nama bookmark di kolom alamat</strong>
+            <p>Ketuk kolom alamat, lalu ketik <span class="ui">Cek Unfollow</span>.</p>
+          </li>
+          <li>
+            <strong>Ketuk bookmark pada daftar saran</strong>
+            <p>Pilih saran yang memiliki ikon bintang <span class="ui">☆</span>.</p>
+            <div class="tip warn"><b>Jangan tekan Enter.</b> Menekan Enter akan membuka pencarian Google, bukan menjalankan bookmark.</div>
+          </li>
+          <li>
+            <strong>Tunggu hingga selesai</strong>
+            <p>Biasanya 1–3 menit. Jangan berpindah aplikasi agar proses tidak terhenti.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= IPHONE ================= -->
+    <section class="doc-section" id="sec-iphone" data-sec="iphone" hidden>
+      <div class="doc-intro">
+        <h2>iPhone / iPad</h2>
+        <p>Gunakan browser <b>Safari</b>. Cara ini tidak dapat dijalankan dari aplikasi Instagram.</p>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 1</span> Pasang penanda (sekali saja)</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka halaman ini di Safari</strong>
+            <p>Jika halaman dibuka dari WhatsApp atau Instagram, pilih <span class="ui">Buka di Safari</span>.</p>
+          </li>
+          <li>
+            <strong>Salin kode bookmark</strong>
+            <p>Ketuk tombol berikut. Kode akan tersalin otomatis.</p>
+            <button class="btn primary sm copy-bm">Salin kode bookmark</button>
+          </li>
+          <li>
+            <strong>Simpan halaman ini sebagai penanda</strong>
+            <p>Ketuk ikon <span class="ui">Bagikan</span> (kotak dengan panah ke atas), pilih <span class="ui">Tambah Penanda</span>, lalu ketuk <span class="ui">Simpan</span>.</p>
+          </li>
+          <li>
+            <strong>Buka daftar penanda</strong>
+            <p>Ketuk ikon buku <span class="ui">Penanda</span>. Pada iOS terbaru, ikon ini ada di menu <span class="ui">⋯</span>.</p>
+          </li>
+          <li>
+            <strong>Edit penanda</strong>
+            <p>Ketuk <span class="ui">Edit</span> di pojok bawah, lalu ketuk penanda yang baru disimpan.</p>
+          </li>
+          <li>
+            <strong>Ubah judul dan alamat</strong>
+            <p>Ganti judul menjadi <span class="ui">Cek Unfollow</span>. Hapus alamatnya dengan tombol <span class="ui">ⓧ</span>, tekan lama kolom alamat, lalu pilih <span class="ui">Tempel</span>.</p>
+          </li>
+          <li>
+            <strong>Simpan</strong>
+            <p>Ketuk <span class="ui">Selesai</span>.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 2</span> Jalankan pemeriksaan</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka instagram.com di Safari dan login</strong>
+            <p>Jika diminta membuka aplikasi, pilih tetap di browser. <a class="inline-link" href="https://www.instagram.com/" target="_blank" rel="noopener">Buka instagram.com</a></p>
+          </li>
+          <li>
+            <strong>Buka Penanda dan ketuk Cek Unfollow</strong>
+            <p>Panel Cek Unfollow muncul di atas halaman Instagram dan mulai mengambil data.</p>
+          </li>
+          <li>
+            <strong>Tunggu hingga selesai</strong>
+            <p>Biasanya 1–3 menit. Jangan berpindah aplikasi agar proses tidak terhenti.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= UNGGAH FILE ================= -->
+    <section class="doc-section" id="sec-file" data-sec="file" hidden>
+      <div class="doc-intro">
+        <h2>Unggah file ekspor Instagram</h2>
+        <p>Cara resmi dari Instagram dan dapat dipakai di semua perangkat, termasuk HP. Prosesnya lebih lama karena perlu menunggu file dari Instagram.</p>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 1</span> Minta data dari Instagram</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka Pusat Akun</strong>
+            <p>Di aplikasi Instagram: <span class="ui">Profil</span> → menu <span class="ui">☰</span> → <span class="ui">Pusat Akun</span>.</p>
+          </li>
+          <li>
+            <strong>Pilih ekspor informasi</strong>
+            <p><span class="ui">Informasi dan izin Anda</span> → <span class="ui">Ekspor informasi Anda</span> → <span class="ui">Buat ekspor</span>, lalu pilih akun.</p>
+          </li>
+          <li>
+            <strong>Ekspor ke perangkat</strong>
+            <p>Pilih <span class="ui">Ekspor ke perangkat</span>.</p>
+          </li>
+          <li>
+            <strong>Atur isi ekspor</strong>
+            <p>Di <span class="ui">Sesuaikan informasi</span>, pilih hanya <b>Pengikut dan mengikuti</b>. Atur <b>Rentang tanggal</b> ke <span class="ui">Sepanjang waktu</span> dan <b>Format</b> ke <span class="ui">JSON</span>.</p>
+            <div class="tip warn"><b>Format harus JSON.</b> Jika memilih HTML, file tetap dapat dibaca, tetapi tanggal mengikuti mungkin tidak tampil.</div>
+          </li>
+          <li>
+            <strong>Mulai ekspor</strong>
+            <p>Ketuk <span class="ui">Mulai ekspor</span>. Instagram akan mengirim notifikasi atau email saat file siap, biasanya dalam beberapa menit hingga beberapa jam.</p>
+          </li>
+          <li>
+            <strong>Unduh file</strong>
+            <p>Buka notifikasi atau email tersebut, lalu unduh file ZIP-nya.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card doc-card">
+        <h3><span class="tag-step">Bagian 2</span> Unggah ke Cek Unfollow</h3>
+        <ol class="doc-steps">
+          <li>
+            <strong>Buka halaman Cek Unfollow</strong>
+            <p><a class="inline-link" href="./">Buka halaman utama</a>, lalu pilih tab <span class="ui">Unggah file</span>.</p>
+          </li>
+          <li>
+            <strong>Pilih file ZIP</strong>
+            <p>Ketuk area unggah dan pilih file ZIP yang sudah diunduh. File tidak perlu diekstrak.</p>
+          </li>
+          <li>
+            <strong>Hasil langsung tampil</strong>
+            <p>Simpan file ekspor berikutnya di lain waktu dan unggah kembali untuk melihat siapa yang berhenti mengikuti.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= TANYA JAWAB ================= -->
+    <section class="doc-section" id="sec-faq" data-sec="faq" hidden>
+      <div class="doc-intro">
+        <h2>Tanya jawab</h2>
+        <p>Masalah yang sering ditemui dan cara mengatasinya.</p>
+      </div>
+
+      <div class="card faq">
+        <details>
+          <summary>Apakah aman? Apakah password saya diminta?</summary>
+          <p>Password tidak pernah diminta. Script berjalan di browser kamu sendiri menggunakan sesi Instagram yang sudah login, dan tidak mengirim data ke server lain. Kode sumbernya terbuka dan dapat diperiksa di <a class="inline-link" href="https://github.com/haidarhafiz21/cek-unfollow" target="_blank" rel="noopener">GitHub</a>.</p>
+        </details>
+        <details>
+          <summary>Muncul pesan "Belum login"</summary>
+          <p>Login terlebih dahulu ke instagram.com di browser yang sama, lalu jalankan bookmark kembali. Login di aplikasi Instagram tidak berlaku untuk browser.</p>
+        </details>
+        <details>
+          <summary>Muncul pesan "Instagram membatasi permintaan"</summary>
+          <p>Instagram membatasi sementara karena terlalu banyak permintaan. Tunggu sekitar 1–2 jam sebelum mencoba lagi. Gunakan pemeriksaan secukupnya, maksimal 1–2 kali sehari.</p>
+        </details>
+        <details>
+          <summary>Bookmark tidak muncul saat mengetik di Android</summary>
+          <p>Pastikan nama bookmark sudah diubah menjadi <b>Cek Unfollow</b>. Coba ketik sebagian saja, misalnya <b>Cek Un</b>, lalu gulir daftar saran untuk mencari item berikon bintang.</p>
+        </details>
+        <details>
+          <summary>Kode tidak bisa ditempel atau bookmark tidak tersimpan</summary>
+          <p>Beberapa browser di HP membatasi panjang alamat bookmark. Jika langkah pemasangan tidak berhasil, gunakan cara <a class="inline-link" href="#file">Unggah file</a> yang dapat dipakai di semua perangkat.</p>
+        </details>
+        <details>
+          <summary>Tidak terjadi apa-apa saat bookmark diklik</summary>
+          <p>Pastikan halaman yang sedang terbuka adalah instagram.com. Jika bookmark dipasang sebelum pembaruan terakhir, hapus bookmark lama lalu pasang ulang dari halaman ini.</p>
+        </details>
+        <details>
+          <summary>Kenapa daftar "Berhenti mengikuti" masih kosong?</summary>
+          <p>Daftar ini terisi mulai pemeriksaan kedua. Hasil setiap pemeriksaan disimpan di browser, lalu dibandingkan dengan pemeriksaan berikutnya. Gunakan browser yang sama setiap kali memeriksa.</p>
+        </details>
+        <details>
+          <summary>Bisakah dijalankan dari aplikasi Instagram?</summary>
+          <p>Tidak. Aplikasi Instagram tidak mendukung bookmark. Gunakan instagram.com di Chrome atau Safari, atau gunakan cara Unggah file.</p>
+        </details>
+        <details>
+          <summary>Jumlah akun di hasil sedikit berbeda dengan di profil</summary>
+          <p>Instagram terkadang tidak mengirim seluruh daftar, dan akun yang dinonaktifkan tidak ikut terhitung. Jika selisihnya besar, jalankan Cek ulang beberapa saat kemudian.</p>
+        </details>
+      </div>
+    </section>
+
+    <div class="doc-foot">
+      <a class="btn primary" href="./">Mulai pemeriksaan</a>
+    </div>
+  </main>
+
+  <footer class="footer container">
+    <p>Data diproses di browser dan tidak dikirim ke server. Tidak berafiliasi dengan Instagram atau Meta.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

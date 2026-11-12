@@ -3,6 +3,7 @@
 Periksa siapa yang tidak follow balik, akun mutual, dan akun yang berhenti mengikuti di Instagram.
 
 **Buka:** https://haidarhafiz21.github.io/cek-unfollow/
+**Panduan lengkap (komputer, Android, iPhone):** https://haidarhafiz21.github.io/cek-unfollow/tutorial.html
 
 ## Cara pakai
 
@@ -33,6 +34,7 @@ Periksa siapa yang tidak follow balik, akun mutual, dan akun yang berhenti mengi
 | File | Isi |
 | --- | --- |
 | `index.html` | Halaman utama |
+| `tutorial.html`, `tutorial.js` | Halaman panduan per perangkat dan tanya jawab |
 | `styles.css` | Tampilan halaman |
 | `app.js` | Logika halaman, mode unggah file, pembuat bookmarklet |
 | `cekunfollow.js` | Script yang dijalankan di instagram.com (isi bookmarklet) |

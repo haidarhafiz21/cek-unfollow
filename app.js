@@ -341,16 +341,13 @@
   let bookmarkUrl = '';
   (function buildBookmarklet() {
     const link = $('#bookmarklet');
-    if (typeof window.cekUnfollowMain !== 'function') {
+    if (typeof window.cekUnfollowBookmarklet !== 'function') {
       link.addEventListener('click', (e) => { e.preventDefault(); toast('File cekunfollow.js tidak ditemukan'); });
       return;
     }
-    // Rapikan sedikit: buang indentasi & baris komentar supaya bookmarklet lebih ringkas
-    const src = String(window.cekUnfollowMain)
-      .split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('//')).join('\n');
-    scriptCode = '(' + src + ')();';
-    const encoded = scriptCode.replace(/[^\x21-\x7e]|[%#"<>`{}|\\^]/gu, (c) => encodeURIComponent(c));
-    bookmarkUrl = 'javascript:' + encoded + 'void%200';
+    const bm = window.cekUnfollowBookmarklet();
+    scriptCode = bm.code;
+    bookmarkUrl = bm.url;
     link.href = bookmarkUrl;
     link.addEventListener('click', (e) => {
       e.preventDefault();

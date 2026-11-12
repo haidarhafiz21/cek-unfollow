@@ -986,3 +986,15 @@ h2,p{margin:0}
   show();
   run();
 }
+
+/*
+ * Dipakai halaman web (index.html & tutorial.html) untuk membuat kode bookmarklet
+ * dari fungsi di atas. Fungsi ini TIDAK ikut masuk ke dalam bookmarklet.
+ */
+function cekUnfollowBookmarklet() {
+  const src = String(cekUnfollowMain)
+    .split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('//')).join('\n');
+  const code = '(' + src + ')();';
+  const url = 'javascript:' + code.replace(/[^\x21-\x7e]|[%#"<>`{}|\\^]/gu, (c) => encodeURIComponent(c)) + 'void%200';
+  return { code, url };
+}
