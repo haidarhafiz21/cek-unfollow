@@ -769,3 +769,49 @@ textarea:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3p
 /* Label penanda pada kolom isian tidak boleh terpotong */
 .mock-input.hl { overflow: visible; }
 .mock-field + .mock-field { padding-top: 12px; }
+
+/* ============ Ilustrasi Safari iOS 26 ============ */
+.mock-float { display: flex; align-items: center; gap: 8px; padding: 10px; }
+.mock-round {
+  width: 34px; height: 34px; flex: none; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--surface-2); border: 1px solid var(--border-strong); font-size: 16px;
+}
+.mock-round svg, .mock-pill svg { width: 15px; height: 15px; }
+.mock-pill {
+  flex: 1; min-width: 0; height: 34px; padding: 0 10px; border-radius: 17px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface-2); border: 1px solid var(--border-strong);
+  white-space: nowrap; overflow: visible;
+}
+.mock-pill .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--muted); text-align: center; }
+.mock-sheet-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+}
+.mock-sheet-head b { font-weight: 600; }
+.mock-sheet-head .act { color: var(--link); font-weight: 600; padding: 0 4px; }
+.mock-sheet-head .muted-act { color: var(--link); opacity: .7; }
+.mock-row .val { margin-left: auto; color: var(--muted); }
+.mock-tiles { display: flex; gap: 14px; padding: 12px 14px 18px; flex-wrap: wrap; }
+.mock-tile { width: 58px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; font-size: 10.5px; line-height: 1.2; color: var(--muted); }
+.mock-tile .sq {
+  width: 46px; height: 46px; border-radius: 11px;
+  display: grid; place-items: center;
+  background: var(--surface-3); color: var(--text); font-size: 18px; font-weight: 600;
+}
+.mock-tile .sq.hl { outline-offset: 3px; }
+.mock-tile .lbl { color: var(--text); }
+.mock-label { padding: 10px 14px 0; font-weight: 600; }
+.mock-ctx {
+  margin: 0 14px 14px auto; width: 70%;
+  border: 1px solid var(--border-strong); border-radius: 10px; background: var(--surface);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, .35);
+}
+.mock-ctx .mock-row { padding: 8px 12px; }
+.mock-sheet-head i { font-style: normal; font-weight: 400; color: var(--muted); }
+.mock-sheet-head i::before { content: " / "; }
+/* Penanda pada ikon Favorit diletakkan di atas agar tidak menutupi nama */
+.mock-tile .hl[data-tap]::after { bottom: auto; top: -11px; right: -16px; }
+.sub-steps { margin: 2px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; display: grid; gap: 4px; }
+.sub-steps b { color: var(--text); font-weight: 600; }
