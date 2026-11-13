@@ -664,3 +664,108 @@ textarea:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3p
 .console-warn { margin: 0 12px 12px; padding: 10px 12px; border-radius: 8px; background: var(--red-bg); color: var(--text); font-size: 13px; }
 .console-warn b { font-weight: 600; }
 .changes-body code { font-size: .85em; }
+
+/* ============ Label tombol dua bahasa ============ */
+.ui i { font-style: normal; font-weight: 400; color: var(--muted); }
+.ui i::before { content: " / "; color: var(--faint); }
+
+/* ============ Ilustrasi layar HP (panduan) ============ */
+.prep {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; margin-bottom: 14px; border-radius: 10px;
+  background: var(--blue-bg); border: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text);
+}
+.prep svg { width: 16px; height: 16px; flex: none; color: var(--blue); margin-top: 2px; }
+.prep p { margin: 0; }
+
+.mock {
+  position: relative; margin-top: 12px; width: 100%; max-width: 300px;
+  border: 1px solid var(--border-strong); border-radius: 14px;
+  background: var(--surface); overflow: visible;
+  font-size: 12.5px; color: var(--text); user-select: none;
+}
+.mock > :first-child { border-top-left-radius: 13px; border-top-right-radius: 13px; }
+.mock > :last-child { border-bottom-left-radius: 13px; border-bottom-right-radius: 13px; }
+.mock-bar {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  background: var(--surface-2); border-bottom: 1px solid var(--border);
+}
+.mock-bar b { font-weight: 600; }
+.mock-bar .end { margin-left: auto; }
+.mock-url {
+  flex: 1; min-width: 0; height: 26px; padding: 0 10px; border-radius: 13px;
+  display: flex; align-items: center;
+  background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+  white-space: nowrap; overflow: hidden;
+}
+.mock-url.typed { color: var(--text); }
+.mock-url .caret { display: inline-block; width: 1.5px; height: 14px; margin-left: 1px; background: var(--link); }
+.mock-ic {
+  min-width: 26px; height: 26px; padding: 0 4px; border-radius: 7px;
+  display: inline-grid; place-items: center; font-size: 15px; line-height: 1; color: var(--text);
+}
+.mock-ic svg { width: 16px; height: 16px; }
+.mock-body { padding: 12px; display: grid; gap: 7px; }
+.mock-body span { display: block; height: 7px; border-radius: 4px; background: var(--surface-3); }
+.mock-body span:nth-child(2) { width: 80%; }
+.mock-body span:nth-child(3) { width: 55%; }
+.mock-menu {
+  position: absolute; top: 40px; right: 8px; width: 62%;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: 10px;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, .35); z-index: 1;
+}
+.mock-icons { display: flex; justify-content: space-between; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.mock-row {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+  border-top: 1px solid var(--border);
+}
+.mock-row:first-child, .mock-bar + .mock-row, .mock-icons + .mock-row { border-top: 0; }
+.mock-row svg { width: 15px; height: 15px; flex: none; color: var(--muted); }
+.mock-row small { display: block; color: var(--muted); font-size: 11px; }
+.mock-row i, .mock-snack i, .mock-bar i, .mock-field small i { font-style: normal; color: var(--muted); }
+.mock-row i::before, .mock-snack i::before, .mock-bar i::before, .mock-field small i::before { content: " / "; }
+.mock.has-menu { min-height: 190px; }
+.mock-snack {
+  margin: 10px; padding: 10px 12px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: #2a2a2f; color: #f4f4f5;
+}
+.mock-snack i { color: #a1a1aa; }
+.mock-snack b { color: #8ab4f8; font-weight: 600; padding: 2px 4px; }
+.mock-field { padding: 8px 12px; }
+.mock-field small { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; }
+.mock-input {
+  height: 30px; padding: 0 10px; border-radius: 7px;
+  display: flex; align-items: center;
+  border: 1px solid var(--border-strong); background: var(--surface);
+  white-space: nowrap; overflow: hidden;
+}
+.mock-input.code { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+.mock-tabbar {
+  display: flex; justify-content: space-around; align-items: center; padding: 8px 6px;
+  background: var(--surface-2); border-top: 1px solid var(--border);
+}
+.mock-sheet-title { padding: 10px 12px; font-weight: 600; text-align: center; border-bottom: 1px solid var(--border); }
+.mock-foot { display: flex; justify-content: flex-end; padding: 8px 12px; border-top: 1px solid var(--border); color: var(--link); font-weight: 500; }
+
+/* Penanda "ketuk di sini" */
+.hl { position: relative; outline: 2px solid var(--link); outline-offset: 2px; border-radius: 7px; }
+.mock-row.hl, .mock-input.hl { outline-offset: -2px; }
+.hl[data-tap]::after {
+  content: attr(data-tap);
+  position: absolute; right: -6px; bottom: -11px; z-index: 2;
+  padding: 1px 7px; border-radius: 99px;
+  background: var(--link); color: #fff;
+  font-size: 10.5px; font-weight: 600; line-height: 16px; white-space: nowrap;
+}
+:root[data-theme="dark"] .hl[data-tap]::after { color: #0b0b0c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hl[data-tap]::after { color: #0b0b0c; } }
+.mock-caption { margin-top: 14px; font-size: 12px; color: var(--faint); }
+
+.guide-cta { display: flex; align-items: center; gap: 8px; }
+.guide-cta svg { width: 16px; height: 16px; }
+.guide-cta { margin-top: 14px; }
+/* Label penanda pada kolom isian tidak boleh terpotong */
+.mock-input.hl { overflow: visible; }
+.mock-field + .mock-field { padding-top: 12px; }

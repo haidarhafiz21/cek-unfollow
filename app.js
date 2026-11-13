@@ -334,6 +334,9 @@
   function setDevice(dev) {
     $$('.dev-btn').forEach((b) => b.classList.toggle('active', b.dataset.device === dev));
     $$('#modeDirect [data-dev]').forEach((el) => { el.hidden = !el.dataset.dev.split(' ').includes(dev); });
+    // Tautan panduan langsung ke bagian perangkat yang dipilih
+    const section = { desktop: 'komputer', android: 'android', ios: 'iphone' }[dev];
+    ['#guideCta', '#guideLink'].forEach((sel) => { const a = $(sel); if (a) a.href = 'tutorial.html#' + section; });
   }
   $$('.dev-btn').forEach((b) => b.addEventListener('click', () => setDevice(b.dataset.device)));
   setDevice(IS_IOS ? 'ios' : IS_ANDROID ? 'android' : 'desktop');

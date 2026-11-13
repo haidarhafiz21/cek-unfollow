@@ -118,8 +118,8 @@
             <li>
               <span class="qs-num">1</span>
               <div class="qs-body">
-                <strong>Salin kode bookmark</strong>
-                <span>Gunakan browser <b>Chrome</b>.</span>
+                <strong>Salin kode</strong>
+                <span>Gunakan aplikasi <b>Chrome</b>.</span>
                 <button class="btn primary sm copy-bm">Salin kode bookmark</button>
               </div>
             </li>
@@ -127,21 +127,14 @@
               <span class="qs-num">2</span>
               <div class="qs-body">
                 <strong>Simpan sebagai bookmark</strong>
-                <span>Ketuk menu <b>⋮</b>, lalu ikon <b>☆</b> untuk menyimpan halaman ini. Ketuk <b>Edit</b> pada notifikasi yang muncul, ubah nama menjadi <b>Cek Unfollow</b>, hapus isi kolom URL, lalu tempel kode tadi.</span>
+                <span>Ketuk <span class="ui">⋮</span> → <span class="ui">☆</span> → <span class="ui">Edit</span>. Ganti nama menjadi <b>Cek Unfollow</b>, hapus isi URL, lalu pilih <span class="ui">Tempel<i>Paste</i></span>.</span>
               </div>
             </li>
             <li>
               <span class="qs-num">3</span>
               <div class="qs-body">
-                <strong>Buka instagram.com di Chrome dan login</strong>
-                <span>Gunakan Chrome, bukan aplikasi Instagram. <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="inline-link">Buka instagram.com</a></span>
-              </div>
-            </li>
-            <li>
-              <span class="qs-num">4</span>
-              <div class="qs-body">
-                <strong>Jalankan bookmark</strong>
-                <span>Ketuk kolom alamat, ketik <b>Cek Unfollow</b>, lalu ketuk bookmark yang muncul di daftar saran.</span>
+                <strong>Jalankan di instagram.com</strong>
+                <span>Buka instagram.com di Chrome, ketik <b>Cek Unfollow</b> di kolom alamat, lalu ketuk hasil yang berikon <span class="ui">☆</span>.</span>
               </div>
             </li>
           </ol>
@@ -151,37 +144,35 @@
             <li>
               <span class="qs-num">1</span>
               <div class="qs-body">
-                <strong>Salin kode bookmark</strong>
-                <span>Gunakan browser <b>Safari</b>.</span>
+                <strong>Salin kode</strong>
+                <span>Gunakan aplikasi <b>Safari</b>.</span>
                 <button class="btn primary sm copy-bm">Salin kode bookmark</button>
               </div>
             </li>
             <li>
               <span class="qs-num">2</span>
               <div class="qs-body">
-                <strong>Simpan halaman ini sebagai penanda</strong>
-                <span>Ketuk ikon <b>Bagikan</b>, pilih <b>Tambah Penanda</b>, lalu <b>Simpan</b>.</span>
+                <strong>Simpan sebagai penanda</strong>
+                <span>Ketuk <span class="ui">Bagikan<i>Share</i></span> → <span class="ui">Tambah Penanda<i>Add Bookmark</i></span> → <span class="ui">Simpan<i>Save</i></span>. Lalu buka <span class="ui">Penanda<i>Bookmarks</i></span> → <span class="ui">Edit</span>, ketuk penanda tadi, ganti judul menjadi <b>Cek Unfollow</b>, dan tempel kode di kolom alamat.</span>
               </div>
             </li>
             <li>
               <span class="qs-num">3</span>
               <div class="qs-body">
-                <strong>Ubah alamat penanda</strong>
-                <span>Buka <b>Penanda</b> (ikon buku), ketuk <b>Edit</b>, lalu pilih penanda tadi. Ganti nama menjadi <b>Cek Unfollow</b>, hapus alamatnya, tempel kode tadi, lalu ketuk <b>Selesai</b>.</span>
-              </div>
-            </li>
-            <li>
-              <span class="qs-num">4</span>
-              <div class="qs-body">
-                <strong>Buka instagram.com di Safari, lalu jalankan</strong>
-                <span>Setelah login, buka <b>Penanda</b> dan ketuk <b>Cek Unfollow</b>. <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="inline-link">Buka instagram.com</a></span>
+                <strong>Jalankan di instagram.com</strong>
+                <span>Buka instagram.com di Safari, buka <span class="ui">Penanda<i>Bookmarks</i></span>, lalu ketuk <b>Cek Unfollow</b>.</span>
               </div>
             </li>
           </ol>
 
+          <a class="btn primary block guide-cta" id="guideCta" data-dev="android ios" hidden href="tutorial.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
+            Lihat panduan bergambar
+          </a>
+
           <div class="direct-actions">
             <button class="btn ghost" id="previewBtn">Lihat contoh hasil</button>
-            <a class="btn ghost" id="guideLink" href="tutorial.html">Panduan lengkap</a>
+            <a class="btn ghost" id="guideLink" data-dev="desktop" href="tutorial.html">Panduan lengkap</a>
           </div>
 
           <details class="console-alt" data-dev="desktop">
@@ -199,7 +190,7 @@
             </button>
           </details>
 
-          <p class="mobile-alt" data-dev="android ios" hidden>Butuh langkah yang lebih rinci? Baca <a class="inline-link" id="guideLinkMobile" href="tutorial.html">panduan lengkap</a>. Bookmark tidak dapat dijalankan dari aplikasi Instagram. Jika langkah di atas tidak berhasil, gunakan tab <button class="link-btn" data-goto-mode="file">Unggah file</button> dengan data ekspor dari aplikasi Instagram.</p>
+          <p class="mobile-alt" data-dev="android ios" hidden>Bookmark tidak dapat dijalankan dari aplikasi Instagram. Jika langkah di atas tidak berhasil, gunakan tab <button class="link-btn" data-goto-mode="file">Unggah file</button> dengan data ekspor dari aplikasi Instagram.</p>
 
           <div class="note">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3z"/></svg>
